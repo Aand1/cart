@@ -1,8 +1,0 @@
-<library path="lib/libsbpl_cart_planner">
-  <class name="SBPLCartPlanner" type="SBPLCartPlanner" base_class_type="nav_core::BaseGlobalPlanner">
-    <description>
-      An implmentation of a search-based planning using anytime a* and a lattice graph for cart pushing.
-    </description>
-  </class>
-</library>
-

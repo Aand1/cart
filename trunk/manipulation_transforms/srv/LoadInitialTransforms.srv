@@ -1,5 +1,0 @@
-# base namespace 
-string name
----
-# true on success 
-bool success

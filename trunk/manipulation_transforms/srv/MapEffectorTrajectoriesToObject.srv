@@ -1,9 +1,0 @@
-# A trajectory of effector states
-EffectorTrajectories effector_traj
----
-# Object trajectory that satisfies query
-geometry_msgs/PoseStamped[] object_poses
-geometry_msgs/TwistStamped[] object_twists
-
-# array of errors for object trajectory
-float64[] error 

@@ -1,7 +1,0 @@
-<launch>
-
-  <node pkg="datamatrix" type="datamatrix.py" name="datamatrix" args="stereo:=/wide_stereo"/>
-  <!-- <node pkg="datamatrix" type="datamatrix.py" name="datamatrix" args="image_stream:=/narrow_stereo/left/image_color camera_info:=/narrow_stereo/left/camera_info" output="screen"/> -->
-
-</launch>
-

@@ -1,9 +1,0 @@
-<launch>
-  <node pkg="cart_state_estimator" type="cart_state_estimator" name="cart_state_estimator" output="screen">
-    <param name="l_gripper_frame" value="l_gripper_tool_frame" />
-    <param name="r_gripper_frame" value="r_gripper_tool_frame" />
-    <param name="publish_fake_gripper_transforms" value="false" />
-    <param name="transform_recency_threshold" value="0.4" />
-    <param name="publication_interval" value="0.05" />
-  </node>
-</launch>

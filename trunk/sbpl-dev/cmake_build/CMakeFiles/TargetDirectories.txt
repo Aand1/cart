@@ -1,3 +1,0 @@
-/home/diro/ros_workspace/final_project/trunk/sbpl-dev/cmake_build/CMakeFiles/sbpl.dir
-/home/diro/ros_workspace/final_project/trunk/sbpl-dev/cmake_build/CMakeFiles/test_adjacency_list.dir
-/home/diro/ros_workspace/final_project/trunk/sbpl-dev/cmake_build/CMakeFiles/test_sbpl.dir
