@@ -1,0 +1,15 @@
+HolonomicCartPlanner:
+  k_trans_base: 1.5
+  k_rot_base: 1.25
+  k_trans_cart: 1.0
+  k_rot_cart: 0.7
+  cart_param_namespace: cart_pushing # clumsy way of making ns flexible in local planner
+  cart_articulation_namespace: articulate_cart_server # clumsy way of making ns flexible in local planner
+  tolerance_trans: 0.15 # 0.02
+  tolerance_rot: 0.15
+  tolerance_timeout: 0.5
+  num_traj_steps: 50 # number of steps for trajectory rollouts
+  dt: 0.01 # delta-time on trajectory rollouts
+  trans_stopped_velocity: 0.0001 # if odom reading is slower than this, then robot is stopped
+  rot_stopped_velocity: 0.0001 # if odom reading is slower than this, then robot is stopped
+  subscribe_sbpl_plan: true

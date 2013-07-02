@@ -1,0 +1,11 @@
+<class_libraries>
+  <library path="lib/libpolygon_point_cloud_filter">
+    <class name="cart_state_estimator/PolygonPointCloudFilter"
+           type="cart_state_estimator::PolygonPointCloudFilter" 
+           base_class_type="filters::FilterBase&lt;sensor_msgs::PointCloud&gt;">
+      <description>
+        This filter removes all points lying within a given polygon
+      </description>
+    </class>
+  </library>
+</class_libraries>

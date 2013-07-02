@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam command="load" file="$(find cart_pushing_executive)/launch/move_base/tilt_scan_max_range.yaml" />
+    <remap from="scan" to="tilt_scan" />
+    <remap from="scan_filtered" to="tilt_scan_max_range" />
+  </node>
+</launch>

@@ -1,0 +1,6 @@
+# A desired sequence of poses and/or twists for the object 
+geometry_msgs/PoseStamped[] object_poses
+geometry_msgs/TwistStamped[] object_twists
+---
+# Effector trajectories that satisfy query
+EffectorTrajectories effector_traj

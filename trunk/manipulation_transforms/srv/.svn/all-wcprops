@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv
+END
+MapEffectorPosesToObject.srv
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapEffectorPosesToObject.srv
+END
+MapObjectPoseToEffectors.srv
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapObjectPoseToEffectors.srv
+END
+MapObjectTrajectoryToEffectors.srv
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapObjectTrajectoryToEffectors.srv
+END
+MapEffectorTwistsToObject.srv
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapEffectorTwistsToObject.srv
+END
+MapObjectTwistToEffectors.srv
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapObjectTwistToEffectors.srv
+END
+MapEffectorTrajectoriesToObject.srv
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/MapEffectorTrajectoriesToObject.srv
+END
+SetInitialTransforms.srv
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/SetInitialTransforms.srv
+END
+LoadInitialTransforms.srv
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/srv/LoadInitialTransforms.srv
+END

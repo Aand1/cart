@@ -1,0 +1,8 @@
+# Query effector poses
+geometry_msgs/PoseStamped[] effector_poses
+---
+# Resulting object pose
+geometry_msgs/PoseStamped object_pose 
+
+# an error metric for how well the solutions from each arm agree
+float64 error 

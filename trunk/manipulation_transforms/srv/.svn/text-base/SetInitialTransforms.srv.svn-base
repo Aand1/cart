@@ -1,0 +1,5 @@
+geometry_msgs/PoseStamped object_pose
+geometry_msgs/PoseStamped[] effector_poses
+---
+# true on success 
+bool success

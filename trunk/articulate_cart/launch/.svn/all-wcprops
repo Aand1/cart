@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/articulate_cart/launch
+END
+articulate_cart_server.launch
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/articulate_cart/launch/articulate_cart_server.launch
+END
+c_jinv.launch
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/articulate_cart/launch/c_jinv.launch
+END

@@ -1,0 +1,12 @@
+<launch>
+
+  <node name="manipulation_transforms_server" pkg="manipulation_transforms" type="manipulation_transforms_server"  respawn="false" args="-l" output="screen" >
+    <remap from="obj_init_pose/position" to="cart_pushing/cart_init_pose/position" />
+    <remap from="obj_init_pose/orientation" to="cart_pushing/cart_init_pose/orientation" />
+    <remap from="effector0_init_pose/position" to="cart_pushing/r_gripper_grasp/position" />
+    <remap from="effector0_init_pose/orientation" to="cart_pushing/r_gripper_grasp/orientation" />
+    <remap from="effector1_init_pose/position" to="cart_pushing/l_gripper_grasp/position" />
+    <remap from="effector1_init_pose/orientation" to="cart_pushing/l_gripper_grasp/orientation" />
+  </node>
+
+</launch>

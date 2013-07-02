@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_local_planner/src
+END
+utils.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_local_planner/src/utils.cpp
+END
+cart_local_planner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_local_planner/src/cart_local_planner.cpp
+END
+fixed_front_cart_planner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_local_planner/src/fixed_front_cart_planner.cpp
+END
+holonomic_cart_planner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_local_planner/src/holonomic_cart_planner.cpp
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_msgs/msg
+END
+RobotCartConfiguration.msg
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_msgs/msg/RobotCartConfiguration.msg
+END
+RobotCartPath.msg
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_msgs/msg/RobotCartPath.msg
+END

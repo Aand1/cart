@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/include/manipulation_transforms
+END
+util.h
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/include/manipulation_transforms/util.h
+END
+manipulation_transforms.h
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/include/manipulation_transforms/manipulation_transforms.h
+END
+manipulation_transforms_ros.h
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/include/manipulation_transforms/manipulation_transforms_ros.h
+END

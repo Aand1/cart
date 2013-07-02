@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/wg-ros-pkg/!svn/ver/46030/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base
+END
+tilt_scan_max_range.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/tilt_scan_max_range.xml
+END
+filters.launch
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/filters.launch
+END
+wg_holonomic_cart_params.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/wg-ros-pkg/!svn/ver/46030/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/wg_holonomic_cart_params.yaml
+END
+costmap_common_params.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/costmap_common_params.yaml
+END
+nav_stack.launch
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/nav_stack.launch
+END
+tilt_scan_max_range.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/tilt_scan_max_range.yaml
+END
+cart_local_planner_params.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/cart_local_planner_params.yaml
+END
+wg_holonomic_cart_filter_params.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/wg-ros-pkg/!svn/ver/46030/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/wg_holonomic_cart_filter_params.yaml
+END
+local_costmap_params_close.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/local_costmap_params_close.yaml
+END
+global_costmap_params.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/global_costmap_params.yaml
+END
+move_base_sbpl.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/launch/move_base/move_base_sbpl.xml
+END

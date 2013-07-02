@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter
+END
+mainpage.dox
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter/mainpage.dox
+END
+ipf_plugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter/ipf_plugin.xml
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter/CMakeLists.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter/Makefile
+END
+manifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/wg-ros-pkg/!svn/ver/52641/stacks/cart_pushing/trunk/isolated_point_filter/manifest.xml
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/launch
+END
+pr2_gazebo_cartworld.launch
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/launch/pr2_gazebo_cartworld.launch
+END
+fake_cart_model_publisher.launch
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/launch/fake_cart_model_publisher.launch
+END
