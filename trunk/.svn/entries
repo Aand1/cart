@@ -1,0 +1,169 @@
+10
+
+dir
+55322
+https://code.ros.org/svn/wg-ros-pkg/stacks/cart_pushing/trunk
+https://code.ros.org/svn/wg-ros-pkg
+
+
+
+2011-10-05T17:51:54.791520Z
+53093
+watts
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+7275ad9f-c29b-430a-bdc5-66f4b3af1622
+
+twist_recovery
+dir
+
+sbpl_cart_planner
+dir
+
+pr2_pose_saver
+dir
+
+costmap_trajectory_checker
+dir
+
+stack.xml
+file
+
+
+
+
+2013-06-27T15:13:56.830442Z
+647bf0f50a047debaceab44fc26442f6
+2011-08-09T17:50:41.912771Z
+52641
+bhaskara
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1366
+
+articulate_cart
+dir
+
+cart_pushing_executive
+dir
+
+cart_pushing_stage
+dir
+
+pr2_gazebo_cartworld
+dir
+
+CMakeLists.txt
+file
+
+
+
+
+2013-06-27T15:13:56.830442Z
+d67689622a8c3b7b1f6cf1f17b29b39f
+2011-08-09T20:25:01.625405Z
+52648
+bhaskara
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+815
+
+Makefile
+file
+
+
+
+
+2013-06-27T15:13:56.830442Z
+5b601d7a08ffb103b97b5e73d9d03b6a
+2010-09-23T01:05:21.042852Z
+44961
+bhaskara
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+48
+
+manipulation_transforms
+dir
+
+cart_pushing_msgs
+dir
+
+cart_state_estimator
+dir
+
+isolated_point_filter
+dir
+
+cart_local_planner
+dir
+

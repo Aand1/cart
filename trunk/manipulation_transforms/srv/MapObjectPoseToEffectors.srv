@@ -1,0 +1,6 @@
+# A desired pose for the object 
+geometry_msgs/PoseStamped object_pose 
+---
+# Effector poses that satisfy goal
+geometry_msgs/PoseStamped[] effector_poses
+

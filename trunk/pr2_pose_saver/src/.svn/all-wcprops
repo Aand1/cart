@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/wg-ros-pkg/!svn/ver/47979/stacks/cart_pushing/trunk/pr2_pose_saver/src
+END
+save.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/pr2_pose_saver/src/save.py
+END
+load.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/wg-ros-pkg/!svn/ver/47979/stacks/cart_pushing/trunk/pr2_pose_saver/src/load.py
+END

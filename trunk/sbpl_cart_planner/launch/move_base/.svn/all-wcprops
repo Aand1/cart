@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/wg-ros-pkg/!svn/ver/45997/stacks/cart_pushing/trunk/sbpl_cart_planner/launch/move_base
+END
+sbpl_global_planner.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/wg-ros-pkg/!svn/ver/45997/stacks/cart_pushing/trunk/sbpl_cart_planner/launch/move_base/sbpl_global_planner.yaml
+END

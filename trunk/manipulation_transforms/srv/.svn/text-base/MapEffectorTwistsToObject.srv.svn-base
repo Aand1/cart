@@ -1,0 +1,8 @@
+# Query effector twists
+geometry_msgs/TwistStamped[] effector_twists
+---
+# Resulting object twist
+geometry_msgs/TwistStamped object_twist 
+
+# an error metric for how well the solutions from each arm agree
+float64 error 

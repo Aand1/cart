@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_state_estimator/launch
+END
+test_footprint_filter.launch
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_state_estimator/launch/test_footprint_filter.launch
+END
+cart_state_estimator.launch
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_state_estimator/launch/cart_state_estimator.launch
+END
+checkerboard_detector.launch
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_state_estimator/launch/checkerboard_detector.launch
+END

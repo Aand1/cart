@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/msg
+END
+EffectorTrajectories.msg
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/msg/EffectorTrajectories.msg
+END
+EffectorTrajectoriesPoint.msg
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/msg/EffectorTrajectoriesPoint.msg
+END

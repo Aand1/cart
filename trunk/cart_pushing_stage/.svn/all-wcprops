@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/wg-ros-pkg/!svn/ver/50909/stacks/cart_pushing/trunk/cart_pushing_stage
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/CMakeLists.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/Makefile
+END
+cart_pushing_stage_fake_localization.launch
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/wg-ros-pkg/!svn/ver/50909/stacks/cart_pushing/trunk/cart_pushing_stage/cart_pushing_stage_fake_localization.launch
+END
+move_base_sbpl_stage.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/move_base_sbpl_stage.xml
+END
+manifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/manifest.xml
+END
+willow-pr2-2.5cm.world
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/willow-pr2-2.5cm.world
+END
+mainpage.dox
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_stage/mainpage.dox
+END

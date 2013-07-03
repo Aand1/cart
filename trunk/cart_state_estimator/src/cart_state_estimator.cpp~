@@ -1,0 +1,282 @@
+
+/*
+ * Copyright (c) 2008, Willow Garage, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Willow Garage, Inc. nor the names of its
+ *       contributors may be used to endorse or promote products derived from
+ *       this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+#include "cart_state_estimator/cart_state_estimator.h"
+#include "cart_state_estimator/util.h"
+
+namespace cart_state_estimator
+{
+const string CART_FRAME("cart");
+const string BASE_FRAME("base_footprint");
+const string CHECKERBOARD_FRAME("CRT");
+
+/************************************************************
+ * Initialization
+ ************************************************************/
+
+gm::PolygonStamped computeFootprint (const double w, const double l)
+{
+  gm::PolygonStamped footprint;
+  footprint.header.frame_id = CART_FRAME;
+  footprint.polygon.points.resize(4);
+  footprint.polygon.points[1].x = l;
+  footprint.polygon.points[2].x = l;
+  footprint.polygon.points[2].y = w;
+  footprint.polygon.points[3].y = w;
+  return footprint;
+}
+
+string toString (const btTransform& tr)
+{
+  btVector3 t = tr.getOrigin();
+  btQuaternion r = tr.getRotation();
+  return (format("((%.3f, %.3f, %.3f), (%.3f, %.3f, %.3f, %.3f))") %
+          t.x() % t.y() % t.z() % r.x() % r.y() % r.z() % r.w()).str();
+}
+
+CartStateEstimator::CartStateEstimator () :
+  cart_width_(getParam<double>("width", "cart_pushing")),
+  cart_length_(getParam<double>("length", "cart_pushing")),
+  l_gripper_frame_(getParam<string>("l_gripper_frame")),
+  r_gripper_frame_(getParam<string>("r_gripper_frame")),
+  /* Uncomment to use local grasp_solver_ call rather than service call
+  cart_init_pose_(readTransformParameter(string("cart_init_pose"))),
+  */
+  publish_fake_transforms_(getPrivateParam<bool>("publish_fake_gripper_transforms", false)),
+  footprint_(computeFootprint(cart_width_, cart_length_)),
+  footprint_x_offset_(getParam<double>("footprint_x_offset", "cart_pushing")),
+  footprint_y_offset_(getParam<double>("footprint_y_offset", "cart_pushing")),
+  publication_interval_(getPrivateParam<double>("publication_interval", 0.1)),
+  transform_recency_threshold_(getPrivateParam<double>("transform_recency_threshold", 0.4)),
+  cart_to_board_(readTransformParameter(string("cart_pushing/checkerboard_pose")).inverse()),
+  pub_timer_(nh_.createWallTimer(WallDuration(publication_interval_), &CartStateEstimator::publishState, this)),
+  footprint_pub_(nh_.advertise<gm::PolygonStamped> ("cart_footprint", 10)),
+  effector_to_cart_client_(nh_.serviceClient<manipulation_transforms::MapEffectorPosesToObject>("manipulation_transforms_server/MapEffectorPosesToObject")),
+  set_solver_transforms_client_(nh_.serviceClient<manipulation_transforms::SetInitialTransforms>("manipulation_transforms_server/SetInitialTransforms"))
+{
+	ROS_INFO("Waiting for manipulation_transforms services");
+	effector_to_cart_client_.waitForExistence(ros::Duration(-1));
+	set_solver_transforms_client_.waitForExistence(ros::Duration(-1));
+	ROS_INFO("Services connected!");
+	/* Uncomment to use local grasp_solver_ call rather than service call
+	gripper_init_poses_.push_back(readTransformParameter(string("r_gripper_grasp")));
+	gripper_init_poses_.push_back(readTransformParameter(string("l_gripper_grasp")));
+	grasp_solver_ = ManipulationTransforms(cart_init_pose_, gripper_init_poses_);
+	*/
+	ROS_ASSERT (cart_width_ > 0.0 && cart_length_ > 0.0);
+}
+
+StampedTransform CartStateEstimator::computeCartFrame (const StampedPose& left, const StampedPose& right) const
+{
+  const double x0 = left.getOrigin().x();
+  const double y0 = left.getOrigin().y();
+  const double x1 = right.getOrigin().x();
+  const double y1 = right.getOrigin().y();
+  
+  tf::Transform trans(btQuaternion::getIdentity(), btVector3((x0+x1)/2, (y0+y1)/2, 0));
+  return tf::StampedTransform(trans, ros::Time::now(), BASE_FRAME, CART_FRAME);
+}
+
+gm::PolygonStamped CartStateEstimator::getProjectedFootprint () const 
+{
+  gm::PolygonStamped footprint = footprint_;
+  tf::StampedTransform cart_to_base;
+  tf_listener_.lookupTransform (BASE_FRAME, CART_FRAME, Time(), cart_to_base);
+  for (unsigned i = 0; i < 4; i++) {
+		btVector3 p(footprint.polygon.points[i].x - footprint_x_offset_,
+				footprint.polygon.points[i].y - footprint_y_offset_,
+				footprint.polygon.points[i].z);
+		btVector3 trans = cart_to_base * p;
+		footprint.polygon.points[i].x = trans.x();
+		footprint.polygon.points[i].y = trans.y();
+		footprint.polygon.points[i].z = 0.0;
+	}
+  footprint.header.stamp = Time::now();
+  footprint.header.frame_id = BASE_FRAME;
+  return footprint;
+}
+
+btTransform CartStateEstimator::cartPoseFromCheckerboard (const btTransform& cb_to_base) const
+{
+  return cb_to_base*cart_to_board_;
+}
+
+
+void CartStateEstimator::broadcastCartPose(const string& frame, const btTransform& trans)
+{
+  tf::StampedTransform stamped(trans, ros::Time::now(), BASE_FRAME, frame);
+  ROS_DEBUG_STREAM_NAMED("cart_state_estimator", "broadcasting cart pose: " << toString(trans));
+  tf_broadcaster_.sendTransform(stamped);
+}
+
+void CartStateEstimator::publishState (const WallTimerEvent& e) 
+{
+  try {
+    footprint_pub_.publish(getProjectedFootprint());
+  }
+  catch (tf::TransformException &ex) {
+    ROS_DEBUG_STREAM_NAMED ("transforms", "Not publishing footprint due to transform exception " << ex.what());
+  }
+
+  //ROS_DEBUG_NAMED ("node", "Acquiring lock");
+  Lock l(mutex_);
+
+  /****************************************
+   * Use gripper positions to get
+   * proprioceptive estimate
+   ****************************************/
+
+  optional<btTransform> proprioceptive_estimate;
+  tf::StampedTransform l_gripper_to_base, r_gripper_to_base;
+  /* Uncomment to use local grasp_solver_ call rather than service call
+  std::vector<tf::Transform> gripper_tfT_base; gripper_tfT_base.resize(2); // Can't be StampedTransform b/c vector clobbers type, and can't be passed
+  */
+  std::vector<gm::PoseStamped> gripper_psT_base; gripper_psT_base.resize(2);
+  const Time most_recent;
+
+  Time cutoff;
+  try {
+    cutoff = Time::now() - Duration(transform_recency_threshold_);
+  } catch (std::runtime_error &e){
+    cutoff = Time::now();
+  }
+
+  try {
+    tf_listener_.lookupTransform (BASE_FRAME, l_gripper_frame_, most_recent, l_gripper_to_base);
+    tf_listener_.lookupTransform (BASE_FRAME, r_gripper_frame_, most_recent, r_gripper_to_base);
+    if (l_gripper_to_base.stamp_ > cutoff && r_gripper_to_base.stamp_ > cutoff) {
+      btTransform estimate;
+      ROS_DEBUG_STREAM ("R gripper pose is " << toString(r_gripper_to_base) <<
+                       " l gripper is " << toString(l_gripper_to_base));
+
+      // Compute object pose using solver directly
+      /* Uncomment to use local grasp_solver_ call rather than service call
+      gripper_tfT_base[0] = btTransform(r_gripper_to_base);
+      gripper_tfT_base[1] = btTransform(l_gripper_to_base);
+      grasp_solver_.mapEffectorPosesToObject(gripper_to_base, estimate);
+       */
+
+      // convert poses to vector of PoseStamped for service call
+      gm::PoseStamped l_gripper_msg, r_gripper_msg;
+      gm::Pose lg, rg;
+      tf::poseTFToMsg(l_gripper_to_base, lg);
+      tf::poseTFToMsg(r_gripper_to_base, rg);
+      r_gripper_msg.pose = rg; r_gripper_msg.header.stamp = ros::Time::now(); r_gripper_msg.header.frame_id = r_gripper_to_base.frame_id_;
+      l_gripper_msg.pose = lg; l_gripper_msg.header.stamp = ros::Time::now(); l_gripper_msg.header.frame_id = l_gripper_to_base.frame_id_;
+      gripper_psT_base[0] = r_gripper_msg; gripper_psT_base[1] = l_gripper_msg;
+      manipulation_transforms::MapEffectorPosesToObject mapsrv;
+      mapsrv.request.effector_poses = gripper_psT_base;
+      effector_to_cart_client_.call(mapsrv);
+
+      //ROS_DEBUG_STREAM("obj pose resp = " << mapsrv.response.object_pose.pose << "(error: " << mapsrv.response.error << ")");
+      // Provide a clean way to handle failures on the manipulation_transforms service call
+      if (mapsrv.response.object_pose.pose.orientation.w == 0){
+    	  tf::TransformException ex("Failed to receive valid pose from manipulation_transforms server");
+    	  throw ex;
+      }
+
+      tf::poseMsgToTF(mapsrv.response.object_pose.pose, estimate);
+      proprioceptive_estimate = estimate;
+      broadcastCartPose("cart_proprioceptive", *proprioceptive_estimate);
+    }
+    else
+      ROS_DEBUG_STREAM_NAMED ("transforms", "Transforms at " << l_gripper_to_base.stamp_ <<
+                              " and " << r_gripper_to_base.stamp_ << " are not within cutoff " << cutoff);
+  }
+  catch (tf::TransformException &ex) {
+    ROS_DEBUG_STREAM_NAMED ("transforms", "Skipping proprioceptive estimate due to transform error " << ex.what());
+  }
+
+  /****************************************
+   * Use checkerboard pose to get sensory
+   * estimate
+   ****************************************/
+
+  optional<btTransform> cb_estimate;
+  tf::StampedTransform cb_to_base;
+  try {
+    tf_listener_.lookupTransform (BASE_FRAME, CHECKERBOARD_FRAME, most_recent, cb_to_base);
+    if (cb_to_base.stamp_ > cutoff) {
+      cb_estimate = cartPoseFromCheckerboard(cb_to_base);
+      broadcastCartPose("cart_checkerboard", *cb_estimate);
+    }
+    else
+      ROS_DEBUG_STREAM_NAMED ("transforms", "Most recent checkerboard transform at " << cb_to_base.stamp_
+                              << " was not within cutoff " << cutoff);
+  }
+  catch (tf::TransformException &ex) {
+    ROS_DEBUG_STREAM_NAMED ("transforms", "Skipping checkerboard estimate due to transform error " << ex.what());
+  }
+
+  if (cb_estimate) {
+    ROS_DEBUG_NAMED ("cart_pose_estimate", "Using checkerboard estimate");
+    broadcastCartPose(CART_FRAME, *cb_estimate);
+  }
+  else if (proprioceptive_estimate) {
+    ROS_DEBUG_NAMED ("cart_pose_estimate", "Using proprioceptive estimate");
+    broadcastCartPose(CART_FRAME, *proprioceptive_estimate);
+  }
+  else
+    ROS_DEBUG_NAMED ("transforms", "Not publishing cart pose as neither estimate was available");
+
+  /****************************************
+   * If we have both estimates, then reset
+   * the grasp solver to make it match the
+   * checkerboard estimate
+   ****************************************/
+  
+  if (proprioceptive_estimate && cb_estimate) {
+    ROS_DEBUG_STREAM_NAMED ("cart_pose_estimate", "Updating grasp solver");
+    /* Uncomment to use local grasp_solver_ call rather than service call
+    gripper_tfT_base[0] = btTransform(r_gripper_to_base);
+    gripper_tfT_base[1] = btTransform(l_gripper_to_base);
+    grasp_solver_.setInitialTransforms(*cb_estimate, gripper_tfT_base);
+    */
+
+    manipulation_transforms::SetInitialTransforms setsrv;
+    setsrv.request.effector_poses = gripper_psT_base;
+    tf::poseTFToMsg(*cb_estimate, setsrv.request.object_pose.pose);
+    setsrv.request.object_pose.header.stamp = ros::Time::now(); setsrv.request.object_pose.header.frame_id = cb_to_base.frame_id_;
+    set_solver_transforms_client_.call(setsrv);
+  }
+
+}
+
+} // namespace cart_state_estimator
+
+int main (int argc, char** argv)
+{
+  ros::init(argc, argv, "cart_state_estimator");
+  cart_state_estimator::CartStateEstimator node;
+  ros::MultiThreadedSpinner spinner(2); // Because the pub thread sometimes waits for the fake pub thread
+  spinner.spin();
+  return 0;
+}

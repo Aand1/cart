@@ -1,0 +1,6 @@
+# A desired twist for the object 
+geometry_msgs/TwistStamped object_twist 
+---
+# Effector twists that satisfy query
+geometry_msgs/TwistStamped[] effector_twists
+

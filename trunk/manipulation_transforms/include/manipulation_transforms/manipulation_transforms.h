@@ -1,0 +1,158 @@
+/*********************************************************************
+ * Software License Agreement (BSD License)
+ *
+ *  Copyright (c) 2008, Willow Garage, Inc.
+ *  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions
+ *  are met:
+ *
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above
+ *     copyright notice, this list of conditions and the following
+ *     disclaimer in the documentation and/or other materials provided
+ *     with the distribution.
+ *   * Neither the name of the Willow Garage nor the names of its
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ *  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ *  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ *  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *  POSSIBILITY OF SUCH DAMAGE.
+ *********************************************************************/
+
+/**
+ * \file ManipulationTransforms.h
+ *
+ * Provides a way to query effector poses from an object pose, and vice-versa,
+ * based on the initial transforms between them.  Currently supports one
+ * or two arms, and I can't imagine any need for extending it further.
+ *
+ *  \date Jun 28, 2010
+ *  \author Jonathan Scholz
+ */
+
+#ifndef MANIPULATION_TRANSFORMS_H_
+#define MANIPULATION_TRANSFORMS_H_
+
+#include <LinearMath/btTransform.h>
+#include "kdl/frames.hpp"
+#include <vector>
+
+#include <tf_conversions/tf_kdl.h>
+
+class ManipulationTransforms {
+public:
+
+	/**
+	 * @brief Empty constructor for ManipulationTransforms
+	 */
+	ManipulationTransforms();
+
+	/**
+	 * @brief Full constructor for ManipulationTransforms
+	 * @param obj_initial_pose Transform from reference frame to obj
+	 * @param effector_initial_poses vector of transforms from reference frame to each effector
+	 */
+	ManipulationTransforms(const tf::Transform &obj_initial_pose, const std::vector<tf::Transform> &effector_initial_poses);
+	ManipulationTransforms(const tf::Transform &obj_initial_pose, const tf::Transform &effector_initial_pose); /// Wrapper for single effector
+	ManipulationTransforms(const tf::Transform &obj_initial_pose, const tf::Transform &effector1_initial_pose, const tf::Transform &effector2_initial_pose);  /// Wrapper for twin effectors
+	virtual ~ManipulationTransforms();
+
+	/**
+	 * @brief Initializer for ManipulationTransforms
+	 * @param obj_initial_pose Transform from object to reference frame
+	 * @param effector_initial_poses Vector of transforms from each effector to reference frame
+	 */
+	void setInitialTransforms(const tf::Transform &obj_initial_pose, const std::vector<tf::Transform> &effector_initial_poses);
+	void setInitialTransforms(const tf::Transform &obj_initial_pose, const tf::Transform &effector_initial_pose); /// Wrapper for single effector
+	void setInitialTransforms(const tf::Transform &obj_initial_pose, const tf::Transform &effector1_initial_pose, const tf::Transform &effector2_initial_pose); /// Wrapper for twin effectors
+
+	/**
+	 * @brief Finds pose of object given effector poses
+	 * @param effector_query_poses Current poses of each effector
+	 * @post obj_pose contains transform of object in reference frame, given provided effector positions
+	 */
+	double mapEffectorPosesToObject(const std::vector<tf::Transform> &effector_query_poses, tf::Transform &obj_pose);
+	double mapEffectorPosesToObject(const tf::Transform &effector_query_pose, tf::Transform &obj_pose); /// Wrapper for single effector
+	double mapEffectorPosesToObject(const tf::Transform &effector1_query_pose, const tf::Transform &effector2_query_pose, tf::Transform &obj_pose); /// Wrapper for twin effectors
+
+	/**
+	 * @brief Finds required effector poses given the provided object pose
+	 * @param obj_pose Desired transform of object in reference frame
+	 * @post effector_poses set according to obj_pose
+	 * @return
+	 */
+	double mapObjectPoseToEffectors(const tf::Transform &obj_query_pose, std::vector<tf::Transform> &effector_poses);
+	double mapObjectPoseToEffectors(const tf::Transform &obj_query_pose, tf::Transform &effector_pose); /// Wrapper for single effector
+	double mapObjectPoseToEffectors(const tf::Transform &obj_query_pose, tf::Transform &effector1_pose, tf::Transform &effector2_pose); /// Wrapper for twin effectors
+
+	/**
+	 * @brief Sets twist of object given effector twists
+	 * @param effector_query_twists Current twists of each effector in their own frame
+	 * @param obj_twist A reference to the twist being calculated
+	 * @param from_ref If true, then the input effector twists are assumed to be defined in the reference
+	 * frame (NOT the effector frame), and are rotated appropriately.  This is the natural situation when
+	 * working with twists from a cartesian arm controller.
+	 * @post obj_twist contains twist of object in specified frame, computed as the un-weighted average of
+	 * transformations according to all effector twists and relative positions
+	 * @return The flattened variance of the twist estimates
+	 */
+	double mapEffectorTwistsToObject(const std::vector<KDL::Twist> &effector_query_twists, KDL::Twist &obj_twist, bool from_ref = true);
+	double mapEffectorTwistsToObject(const KDL::Twist &effector_query_twist, KDL::Twist &obj_twist, bool from_ref = true); /// Wrapper for single effector
+	double mapEffectorTwistsToObject(const KDL::Twist &effector1_query_twist, const KDL::Twist &effector2_query_twist, KDL::Twist &obj_twist, bool from_ref = true); /// Wrapper for twin effectors
+
+	/**
+	 * @brief Sets effector twists given the desired object twist
+	 * @param obj_query_twist Contains twist of object in the object frame
+	 * @param effector_twists A reference to the vector of effector twists, each defined in their own frame
+	 * @param to_ref If true, then the output effector twists are rotated to the reference frame (from separate effector
+	 * frames).  This is the natural situation when working with twists from a cartesian arm controller.
+	 * @post effector_twists contains twist of effectors in specified frame required to produce obj_query_twist
+	 * @return
+	 */
+	double mapObjectTwistToEffectors(const KDL::Twist &obj_query_twist, std::vector<KDL::Twist> &effector_twists, bool to_ref = true);
+	double mapObjectTwistToEffectors(const KDL::Twist &obj_query_twist, KDL::Twist &effector_twist, bool to_ref = true);
+	double mapObjectTwistToEffectors(const KDL::Twist &obj_query_twist, KDL::Twist &effector1_twist, KDL::Twist &effector2_twist, bool to_ref = true);
+
+	/**
+	 * @brief Finds wrench on the object given wrench at each effector
+	 * @param effector_query_wrenches Current wrench at each effector
+	 * @post obj_wrench contains wrench on object in reference frame, computed as the sum of wrenches mapped into
+	 * the reference frame
+	 * @return
+	 * <UNTESTED>
+	 */
+	double mapEffectorWrenchesToObject(const std::vector<KDL::Wrench> &effector_query_wrenches, KDL::Wrench &obj_wrench);
+
+	/**
+	 * @brief Sets effector wrenches given the desired object wrench
+	 * @param obj_query_wrench contains the wrench at the object in the reference frame
+	 * @post effector_wrenches are set to achieve desired obj_query_wrench
+	 * @return
+	 * <UNTESTED>
+	 */
+	double mapObjectWrenchToEffectors(const KDL::Wrench &obj_query_wrench, std::vector<KDL::Wrench> &effector_wrenches);
+
+private:
+	unsigned int n_effectors_; /** The number of effectors */
+
+	std::vector<tf::Transform> obj_T_effectors_; /** Vector of transforms from object frame to effectors */
+	std::vector<tf::Transform> effector_T_obj_; /** Vector of transforms from effector frames to object */
+
+	std::vector<tf::Transform> effector_T_ref_; /** Vector of transforms from effectors to reference frame */
+	tf::Transform obj_T_ref_; /** Transform from object to reference frame */
+};
+
+#endif /* MANIPULATION_TRANSFORMS_H_ */

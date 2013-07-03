@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/scripts
+END
+mapEffectorsToObject_client.py
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/scripts/mapEffectorsToObject_client.py
+END
+mapObjectToEffectors_client.py
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/scripts/mapObjectToEffectors_client.py
+END
+setGraspTransforms.py
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/manipulation_transforms/scripts/setGraspTransforms.py
+END

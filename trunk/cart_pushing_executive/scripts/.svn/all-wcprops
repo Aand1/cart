@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/wg-ros-pkg/!svn/ver/47980/stacks/cart_pushing/trunk/cart_pushing_executive/scripts
+END
+tour_no_hallway.py
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/scripts/tour_no_hallway.py
+END
+tour.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/cart_pushing_executive/scripts/tour.py
+END
+send_periodic_cmd.py
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/wg-ros-pkg/!svn/ver/47980/stacks/cart_pushing/trunk/cart_pushing_executive/scripts/send_periodic_cmd.py
+END

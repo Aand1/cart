@@ -1,0 +1,50 @@
+# %Tag(WRITE)%
+
+# Physical cart dimensions
+length: 0.72
+width: 0.46
+
+# Offset of footprint from origin in cart_frame
+footprint_x_offset: 0.22
+footprint_y_offset: 0.23
+
+
+# Workspace constraints of cart origin in base frame
+x_min: 0.65
+x_max: 1.05
+y_min: -0.35
+y_max: 0.35
+t_min: -0.8
+t_max: 0.8
+
+
+# Velocity constraints
+max_vel_base_x: 0.8
+max_vel_base_y: 0.5
+max_vel_base_theta: 0.25
+max_vel_cart_x: 0.8
+max_vel_cart_y: 0.4
+max_vel_cart_theta: 0.25
+
+
+# Initial pose of cart in base_footprint frame
+cart_init_pose: 
+  position: [0.800, 0.000, 0.000]
+  orientation: [0.000, 0.000, 0.000, 1.000]
+
+
+# Initial, fixed positions of grippers in cart frame
+l_gripper_grasp: 
+  position: [0.459, 0.117, 0.933]
+  orientation: [0.505, -0.483, 0.497, 0.514]
+r_gripper_grasp: 
+  position: [0.468, -0.115, 0.932]
+  orientation: [0.545, -0.458, 0.480, 0.512]
+
+# Pose of checkerboard in cart frame
+checkerboard_pose: 
+  position: [-0.380, 0.041, 0.937]
+  orientation: [0.137, -0.073, -0.713, 0.684]
+
+# %EndTag(WRITE)%
+

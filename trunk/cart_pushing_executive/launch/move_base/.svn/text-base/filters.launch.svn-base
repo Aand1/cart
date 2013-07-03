@@ -1,0 +1,51 @@
+<!--
+Brings up the laser filters required for cart navigation
+Ensures that the following topics are published:
+- base_scan (used for clearing)
+- base_scan_marking (filtered base scan)
+- tilt_scan_max_range (used for clearing)
+_ tilt_cloud_filtered (the tilt scan, filtered for max range, ground hits, nd isolated points)
+-->
+
+<launch>
+
+  <arg name="cart_name"/>
+
+  <!-- Perception: first load the defaults -->
+  <include file="$(find pr2_navigation_perception)/lasers_and_filters.xml" />
+  <include file="$(find pr2_navigation_perception)/ground_plane.xml" />
+
+  <!-- Load a bunch of extra filters -->
+  <include file="$(find cart_pushing_executive)/launch/move_base/tilt_scan_max_range.xml" />
+
+  <!-- Overrides the standard filter chain to include cart footprint filtering -->
+  <rosparam file="$(find cart_pushing_executive)/launch/move_base/$(arg cart_name)_cart_filter_params.yaml" command="load" ns="base_shadow_filter"/>
+  <rosparam file="$(find cart_pushing_executive)/launch/move_base/$(arg cart_name)_cart_filter_params.yaml" command="load" ns="tilt_shadow_filter"/>
+
+
+  <!-- isolated point filter -->
+  <node pkg="cart_state_estimator" type="scan_to_cloud_filter_chain" respawn="false" name="tilt_cloud" output="screen" >
+    <remap from="scan" to="base_scan" />
+    <remap from="cloud_filtered" to="tilt_cloud_filtered" />
+    <remap from="cloud" to="ground_object_cloud" />
+    <param name="target_frame" value="/odom_combined" />
+    <param name="use_cloud_input" value="true" />
+  <rosparam>
+    cloud_filter_chain:
+    - type: isolated_point_filter/IsolatedPointFilter
+      name: isolated_point_filter
+      params:
+        frame: base_footprint
+        resolution: 0.025
+        x_min: -5.0
+        x_max: 10.0
+        y_min: -10.0
+        y_max: 10.0
+        inner_radius: 0
+        outer_radius: 2
+        negate: 0
+        z_max: 1.0
+  </rosparam>
+  </node>
+
+</launch>

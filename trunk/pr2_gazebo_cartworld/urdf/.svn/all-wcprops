@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/wg-ros-pkg/!svn/ver/45304/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/urdf
+END
+steel_nonholonomic_cart.urdf.xacro
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/urdf/steel_nonholonomic_cart.urdf.xacro
+END
+wg_holonomic_cart.urdf.xacro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/wg-ros-pkg/!svn/ver/45304/stacks/cart_pushing/trunk/pr2_gazebo_cartworld/urdf/wg_holonomic_cart.urdf.xacro
+END

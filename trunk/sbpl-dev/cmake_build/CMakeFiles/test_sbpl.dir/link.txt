@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG    CMakeFiles/test_sbpl.dir/home/diro/ros_workspace/final_project/trunk/sbpl-dev/src/test/main.o  -o bin/test_sbpl -rdynamic libsbpl.a 

@@ -1,0 +1,23 @@
+<package>
+  <description brief="cart_state_estimator">
+Estimate state of cart being pushed by robot
+  </description>
+  <author>Bhaskara Marthi</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cart_state_estimator</url>
+  <depend package="tf"/>
+  <depend package="roscpp"/>
+  <depend package="geometry_msgs"/>
+  <depend package="manipulation_transforms"/>
+  <depend package="filters"/>
+  <depend package="laser_geometry"/>  
+
+  <export>
+    <cpp cflags="-I${prefix}/include" />
+    <filters plugin="${prefix}/footprint_filter_plugin.xml" />
+  </export>
+
+</package>
+
+

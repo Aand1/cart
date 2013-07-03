@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/wg-ros-pkg/!svn/ver/45997/stacks/cart_pushing/trunk/sbpl_cart_planner/launch
+END
+pr2_cart.mprim.old
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/sbpl_cart_planner/launch/pr2_cart.mprim.old
+END
+pr2_cart_articulate.mprim
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/sbpl_cart_planner/launch/pr2_cart_articulate.mprim
+END
+pr2_cart.mprim
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/wg-ros-pkg/!svn/ver/45285/stacks/cart_pushing/trunk/sbpl_cart_planner/launch/pr2_cart.mprim
+END
